@@ -31,7 +31,7 @@ spring:
     username: root
 
     # DB 비밀번호 (비워두면 비밀번호 없는 계정으로 접속 시도)
-    password: altmxjcb0818!
+    password:
 
   # JPA 설정 (쿼리 로그 + DB 생성 규칙)
   jpa:
