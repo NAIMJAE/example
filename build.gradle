@@ -1,0 +1,54 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.2'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Spring Boot 기본 스타터
+	// - 스프링부트 핵심(자동 설정 등)만 필요할 때 사용
+	// - 보통 web, data-jpa 같은 구체 스타터를 쓰면 굳이 없어도 되는 경우가 많음 (중복 가능)
+	implementation 'org.springframework.boot:spring-boot-starter'
+
+	// 개발 편의 (핫 리로드/자동 재시작 등)
+	// - 로컬 개발에서만 켜고, 운영 배포에는 포함되지 않도록 developmentOnly 사용
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// 웹 서버/REST API (Spring MVC + 내장 톰캣)
+	// - Controller, @RestController 기반 API를 만들 때 필수
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Lombok (컴파일 시점 코드 생성)
+	// - compileOnly: 런타임 클래스패스에 포함하지 않음(운영에 불필요)
+	// - annotationProcessor: 컴파일 단계에서 Lombok 어노테이션 처리
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// MySQL JDBC 드라이버
+	// - MySQL DB에 실제로 연결하기 위한 드라이버
+	// - Spring Boot가 실행될 때(DB 접속 시점) 필요하므로 보통 runtimeOnly로 둔다
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Spring Data JPA + Hibernate + 트랜잭션
+	// - JPA 기반 ORM 사용(@Entity, JpaRepository, 영속성 컨텍스트, 트랜잭션 등)
+	// - CRUD를 리포지토리로 빠르게 만들고, 객체 중심으로 DB를 다룰 때 사용
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
